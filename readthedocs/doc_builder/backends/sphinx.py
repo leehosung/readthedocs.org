@@ -68,8 +68,13 @@ class BaseSphinx(BaseBuilder):
         outfile.write("\n")
         conf_py_path = version_utils.get_conf_py_path(self.version)
         remote_version = version_utils.get_vcs_version_slug(self.version)
+        gitlab_info = version_utils.get_gitlab_username_repo(self.version)
         github_info = version_utils.get_github_username_repo(self.version)
         bitbucket_info = version_utils.get_bitbucket_username_repo(self.version)
+        if gitlab_info[0] is None:
+            display_gitlab = False
+        else:
+            display_gitlab = True
         if github_info[0] is None:
             display_github = False
         else:
@@ -90,6 +95,11 @@ class BaseSphinx(BaseBuilder):
             'conf_py_path': conf_py_path,
             'downloads': apiv2.version(self.version.pk).downloads.get()['downloads'],
             'api_host': getattr(settings, 'SLUMBER_API_HOST', 'https://readthedocs.org'),
+            # GitLab
+            'gitlab_user': gitlab_info[0],
+            'gitlab_repo': gitlab_info[1],
+            'gitlab_version':  remote_version,
+            'display_gitlab': display_gitlab,
             # GitHub
             'github_user': github_info[0],
             'github_repo': github_info[1],

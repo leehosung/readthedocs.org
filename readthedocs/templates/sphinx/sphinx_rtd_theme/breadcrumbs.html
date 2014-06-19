@@ -6,8 +6,10 @@
       {% endfor %}
     <li>{{ title }}</li>
       <li class="wy-breadcrumbs-aside">
-        {% if display_github %}
-          <a href="https://github.com/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}{{ source_suffix }}" class="fa fa-github"> Edit on GitHub</a>
+	{% if display_gitlab %}
+          <a href="https://gitlab.enswer.net/{{ gitlab_user }}/{{ gitlab_repo }}/blob/{{ gitlab_version }}{{ conf_py_path }}{{ pagename }}.rst" class="fa fa-github"> Edit on Gitlab</a>
+        {% elif display_github %}
+          <a href="https://github.com/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}.rst" class="fa fa-github"> Edit on GitHub</a>
         {% elif display_bitbucket %}
           <a href="https://bitbucket.org/{{ bitbucket_user }}/{{ bitbucket_repo }}/src/{{ bitbucket_version}}{{ conf_py_path }}{{ pagename }}{{ source_suffix }}" class="fa fa-bitbucket"> Edit on Bitbucket</a>
         {% elif show_source and has_source and sourcename %}

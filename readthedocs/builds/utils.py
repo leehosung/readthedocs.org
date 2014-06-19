@@ -4,6 +4,9 @@ from shutil import rmtree
 
 log = logging.getLogger(__name__)
 
+GL_REGEXS = [
+    re.compile('.+/(.+)/(.+).git'),
+]
 
 GH_REGEXS = [
     re.compile('github.com/(.+)/(.+)(?:\.git){1}'),
@@ -16,6 +19,15 @@ BB_REGEXS = [
     re.compile('bitbucket.org/(.+)/(.+)'),
     re.compile('bitbucket.org:(.+)/(.+)\.git'),
 ]
+
+def get_gitlab_username_repo(version):
+    repo_url = version.project.repo
+    if 'gitlab' in repo_url:
+        for regex in GL_REGEXS:
+            match = regex.search(repo_url)
+            if match:
+                return match.groups()
+    return (None, None)
 
 def get_github_username_repo(version):
     repo_url = version.project.repo
